@@ -1,9 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
     id("com.google.gms.google-services")
-    id("org.gradle.toolchains.foojay-resolver-convention") version("0.5.0")
 }
 
 android {
