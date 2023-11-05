@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ViviDAY"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.vividay.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="viviDay"
             android:theme="@style/Theme.ViviDAY">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
