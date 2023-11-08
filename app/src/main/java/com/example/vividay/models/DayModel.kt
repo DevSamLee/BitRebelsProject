@@ -1,4 +1,9 @@
 package com.example.vividay.models
 
-class DayModel {
-}
+import java.time.LocalDateTime
+
+data class DayModel (
+    var color: String? = null,
+    var note: String? = null,
+    var dateTime: LocalDateTime
+)
