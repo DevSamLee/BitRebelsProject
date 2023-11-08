@@ -56,16 +56,16 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                        NavHost(navController = navController, startDestination = "sign_in") {
-                            composable("sign_in") {
-                                val viewModel = viewModel<SignInViewModel>()
-                                val state by viewModel.state.collectAsStateWithLifecycle()
+                    NavHost(navController = navController, startDestination = "sign_in") {
+                        composable("sign_in") {
+                            val viewModel = viewModel<SignInViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
 
-                                LaunchedEffect(key1 = Unit) {
-                                    if(googleAuthUiClient.getSignedInUser() != null) {
-                                        navController.navigate("profile")
-                                    }
+                            LaunchedEffect(key1 = Unit) {
+                                if(googleAuthUiClient.getSignedInUser() != null) {
+                                    navController.navigate("profile")
                                 }
+                            }
 
                                 val launcher = rememberLauncherForActivityResult(
                                     contract = ActivityResultContracts.StartIntentSenderForResult(),
