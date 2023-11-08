@@ -26,6 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.vividay.DetailActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name="com.example.vividay.InsertionActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable" />
     </application>
 
 </manifest>
