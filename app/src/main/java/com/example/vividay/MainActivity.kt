@@ -1,6 +1,5 @@
 package com.example.vividay
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -11,12 +10,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -29,10 +25,11 @@ import com.google.android.gms.auth.api.identity.Identity
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.vividay.presentation.data_screen.DataScreen
+import com.example.vividay.presentation.data_screen.DataViewModel
 import com.example.vividay.presentation.profile.ProfileScreen
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
 
@@ -89,7 +86,7 @@ class MainActivity : ComponentActivity() {
                                             Toast.LENGTH_LONG
                                         ).show()
 
-                                        navController.navigate("profile")
+                                        navController.navigate("data")
                                         viewModel.resetState()
                                     }
                                 }
@@ -124,6 +121,10 @@ class MainActivity : ComponentActivity() {
                                         }
                                     }
                                 )
+                            }
+                            composable("data") {
+                                val dataViewModel: DataViewModel = viewModel()
+                                DataScreen(viewModel = dataViewModel)
                             }
                         }
                     }
