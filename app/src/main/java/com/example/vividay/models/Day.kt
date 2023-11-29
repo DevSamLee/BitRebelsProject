@@ -1,6 +1,6 @@
 package com.example.vividay.models
 
-data class DayModel (
+data class Day (
     var dayId: String? = null,
     var dayColor: String? = null,
     var dayNote: String? = null,
