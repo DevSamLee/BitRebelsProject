@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vividay.presentation.data_screen.DataScreen
 import com.example.vividay.presentation.data_screen.DataViewModel
+import com.example.vividay.presentation.data_screen.InputScreen
 import com.example.vividay.presentation.profile.ProfileScreen
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -116,7 +117,6 @@ class MainActivity : ComponentActivity() {
                                                 "Sign out",
                                                 Toast.LENGTH_LONG
                                             ).show()
-
                                             navController.popBackStack()
                                         }
                                     }
@@ -125,6 +125,9 @@ class MainActivity : ComponentActivity() {
                             composable("data") {
                                 val dataViewModel: DataViewModel = viewModel()
                                 DataScreen(viewModel = dataViewModel)
+                            }
+                            composable("input") {
+                                InputScreen()
                             }
                         }
                     }
