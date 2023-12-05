@@ -49,7 +49,7 @@ fun InputScreen(
     Box(
     modifier = Modifier
     .fillMaxSize()
-    .padding(36.dp)
+    .padding(26.dp)
     ) {
         Column(
             modifier = Modifier
@@ -86,7 +86,7 @@ fun InputScreen(
                 onValueChange = { newText -> dayNote = newText },
                 label = { Text(text = "Note") },
                 modifier = Modifier
-                    .height(330.dp)
+                    .height(300.dp)
                     .width(330.dp)
             )
             Spacer(modifier = Modifier.weight(1f)) // Spacer to push content above bottom navigation bar
@@ -103,7 +103,7 @@ fun InputScreen(
                     dayColor = ""
                     dayNote = ""
                 },
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(9.dp)
             ) {
                 Text(text = "Save")
             }
