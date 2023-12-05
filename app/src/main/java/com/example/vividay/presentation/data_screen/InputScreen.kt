@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,8 +22,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.vividay.models.Day
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -30,6 +33,7 @@ import com.google.firebase.ktx.Firebase
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputScreen(
+    onSaved: () -> Unit
 )  {
     val database = Firebase.database
     var dateTime by remember {
@@ -54,6 +58,14 @@ fun InputScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            // Add a text above the TextFields
+            Text(
+                modifier = Modifier
+                    .padding(20.dp),
+                text = "How's your day today?",
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold
+            )
             TextField(
                 modifier = Modifier
                     .width(330.dp),
@@ -74,9 +86,11 @@ fun InputScreen(
                 onValueChange = { newText -> dayNote = newText },
                 label = { Text(text = "Note") },
                 modifier = Modifier
-                    .height(400.dp)
+                    .height(330.dp)
                     .width(330.dp)
             )
+            Spacer(modifier = Modifier.weight(1f)) // Spacer to push content above bottom navigation bar
+
             val context = LocalContext.current
             Button(
                 onClick = {

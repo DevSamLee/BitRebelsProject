@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">viviDAY</string>
     <string name="web_client_id">314602850971-8d9dimm7u5jkklmn542b8p7k89ae7buq.apps.googleusercontent.com</string>
+    <string name="data">Home</string>
+    <string name="input">Create</string>
+    <string name="profile">Profile</string>
 </resources>

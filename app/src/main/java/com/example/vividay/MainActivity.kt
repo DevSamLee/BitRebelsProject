@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +24,7 @@ import com.google.android.gms.auth.api.identity.Identity
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.vividay.presentation.data_screen.DataScreen
+import com.example.vividay.navigation.TabsNavGraph
 import com.example.vividay.presentation.data_screen.DataViewModel
 import com.example.vividay.presentation.data_screen.InputScreen
 import com.example.vividay.presentation.profile.ProfileScreen
@@ -61,77 +60,55 @@ class MainActivity : ComponentActivity() {
 
                             LaunchedEffect(key1 = Unit) {
                                 if(googleAuthUiClient.getSignedInUser() != null) {
-                                    navController.navigate("profile")
+                                    navController.navigate("tabs")
                                 }
                             }
 
-                                val launcher = rememberLauncherForActivityResult(
-                                    contract = ActivityResultContracts.StartIntentSenderForResult(),
-                                    onResult = { result ->
-                                        if(result.resultCode == RESULT_OK) {
-                                            lifecycleScope.launch {
-                                                val signInResult = googleAuthUiClient.signInWithIntent(
+                            val launcher = rememberLauncherForActivityResult(
+                                contract = ActivityResultContracts.StartIntentSenderForResult(),
+                                onResult = { result ->
+                                    if (result.resultCode == RESULT_OK) {
+                                        lifecycleScope.launch {
+                                            val signInResult =
+                                                googleAuthUiClient.signInWithIntent(
                                                     intent = result.data ?: return@launch
                                                 )
-                                                viewModel.onSignInResult(signInResult)
-                                            }
+                                            viewModel.onSignInResult(signInResult)
                                         }
-                                    }
-                                )
-
-                                LaunchedEffect(key1 = state.isSignInSuccessful) {
-                                    if(state.isSignInSuccessful) {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            "Sign in successful",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-
-                                        navController.navigate("data")
-                                        viewModel.resetState()
                                     }
                                 }
+                            )
+                            LaunchedEffect(key1 = state.isSignInSuccessful) {
+                                if (state.isSignInSuccessful) {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Sign in successful",
+                                        Toast.LENGTH_LONG
+                                    ).show()
 
-                                 SignInScreen(
-                                     state = state,
-                                     onSignInClick = {
-                                         lifecycleScope.launch {
-                                             val signIntentSender = googleAuthUiClient.signIn()
-                                             launcher.launch(
-                                                 IntentSenderRequest.Builder(
-                                                     signIntentSender ?: return@launch
-                                                 ).build()
-                                             )
-                                         }
-                                     }
-                                 )
-                             }
-                            composable("profile") {
-                                ProfileScreen(
-                                    userData = googleAuthUiClient.getSignedInUser(),
-                                    onSignOut = {
-                                        lifecycleScope.launch {
-                                            googleAuthUiClient.signOut()
-                                            Toast.makeText(
-                                                applicationContext,
-                                                "Sign out",
-                                                Toast.LENGTH_LONG
-                                            ).show()
-                                            navController.popBackStack()
-                                        }
+                                    navController.navigate("tabs")
+                                    viewModel.resetState()
+                                }
+                            }
+
+                            SignInScreen(
+                                navController = navController,
+                                state = state,
+                                onSignInClick = {
+                                    lifecycleScope.launch {
                                     }
-                                )
-                            }
-                            composable("data") {
-                                val dataViewModel: DataViewModel = viewModel()
-                                DataScreen(viewModel = dataViewModel)
-                            }
-                            composable("input") {
-                                InputScreen()
-                            }
+                                }
+                            )
+                        }
+                        composable("tabs") {
+                            TabsNavGraph(
+                                googleAuthUiClient = googleAuthUiClient,
+                                dataViewModel = DataViewModel()
+                            )
                         }
                     }
                 }
             }
         }
     }
+}

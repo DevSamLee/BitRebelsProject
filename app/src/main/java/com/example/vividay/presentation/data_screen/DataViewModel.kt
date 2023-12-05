@@ -19,7 +19,7 @@ class DataViewModel: ViewModel(){
         fetchDataFromFirebase()
     }
 
-    private fun fetchDataFromFirebase() {
+    fun fetchDataFromFirebase() {
         val tempList = mutableListOf<Day>()
         response.value = DataState.Loading
         FirebaseDatabase.getInstance().getReference("Day")
