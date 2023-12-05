@@ -47,13 +47,13 @@ fun InputScreen(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
+    modifier = Modifier
+    .fillMaxSize()
+    .padding(36.dp)
     ) {
         Column(
             modifier = Modifier
+                .padding(10.dp)
                 .width(330.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -90,6 +90,7 @@ fun InputScreen(
                     .width(330.dp)
             )
             Spacer(modifier = Modifier.weight(1f)) // Spacer to push content above bottom navigation bar
+
             val context = LocalContext.current
             Button(
                 onClick = {

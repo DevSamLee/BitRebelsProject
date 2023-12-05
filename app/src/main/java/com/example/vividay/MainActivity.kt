@@ -26,10 +26,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vividay.navigation.TabsNavGraph
 import com.example.vividay.presentation.data_screen.DataViewModel
-<<<<<<< Updated upstream
+import com.example.vividay.presentation.data_screen.InputScreen
 import com.example.vividay.presentation.profile.ProfileScreen
-=======
->>>>>>> Stashed changes
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 
@@ -80,44 +78,6 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             )
-
-<<<<<<< Updated upstream
-                                 SignInScreen(
-                                     state = state,
-                                     onSignInClick = {
-                                         lifecycleScope.launch {
-                                             val signIntentSender = googleAuthUiClient.signIn()
-                                             launcher.launch(
-                                                 IntentSenderRequest.Builder(
-                                                     signIntentSender ?: return@launch
-                                                 ).build()
-                                             )
-                                         }
-                                     }
-                                 )
-                             }
-                            composable("profile") {
-                                ProfileScreen(
-                                    userData = googleAuthUiClient.getSignedInUser(),
-                                    onSignOut = {
-                                        lifecycleScope.launch {
-                                            googleAuthUiClient.signOut()
-                                            Toast.makeText(
-                                                applicationContext,
-                                                "Sign out",
-                                                Toast.LENGTH_LONG
-                                            ).show()
-
-                                            navController.popBackStack()
-                                        }
-                                    }
-                                )
-                            }
-                            composable("data") {
-                                val dataViewModel: DataViewModel = viewModel()
-                                DataScreen(viewModel = dataViewModel)
-                            }
-=======
                             LaunchedEffect(key1 = state.isSignInSuccessful) {
                                 if (state.isSignInSuccessful) {
                                     Toast.makeText(
@@ -145,7 +105,6 @@ class MainActivity : ComponentActivity() {
                                 googleAuthUiClient = googleAuthUiClient,
                                 dataViewModel = DataViewModel()
                             )
->>>>>>> Stashed changes
                         }
                     }
                 }
