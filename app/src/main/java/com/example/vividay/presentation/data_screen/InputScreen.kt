@@ -33,17 +33,20 @@ import com.google.firebase.ktx.Firebase
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputScreen(
-    onSaved: () -> Unit
+    onSaved: () -> Unit,
+    initialDateTime: String = "",
+    initialDayColor: String = "",
+    initialDayNote: String = ""
 )  {
     val database = Firebase.database
     var dateTime by remember {
-        mutableStateOf("")
+        mutableStateOf(initialDateTime)
     }
     var dayColor by remember {
-        mutableStateOf("")
+        mutableStateOf(initialDayColor)
     }
     var dayNote by remember {
-        mutableStateOf("")
+        mutableStateOf(initialDayNote)
     }
 
     Box(
