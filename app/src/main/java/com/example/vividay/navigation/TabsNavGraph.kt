@@ -26,15 +26,20 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.vividay.models.Day
+import com.example.vividay.presentation.data_screen.DataDetailScreen
 import com.example.vividay.presentation.data_screen.DataScreen
 import com.example.vividay.presentation.data_screen.DataViewModel
 import com.example.vividay.presentation.data_screen.InputScreen
 import com.example.vividay.presentation.profile.ProfileScreen
 import com.example.vividay.presentation.sign_in.GoogleAuthUiClient
+import com.example.vividay.sealed.DataState
 import com.example.vividay.sealed.Screen
 import kotlinx.coroutines.launch
 
@@ -97,14 +102,24 @@ fun TabsNavGraph(
             }
         }
     )  { innerPadding ->
+        var selectedDay by remember { mutableStateOf<Day?>(null) }
+
         NavHost(
             navController = navController,
-            startDestination = "profile",
+            startDestination = "data",
             modifier = Modifier.padding(innerPadding)
         ) {
             // Define your composable screens here
             composable("data") {
-                DataScreen(viewModel = dataViewModel)
+                DataScreen(viewModel = dataViewModel, navHostController = navController)
+            }
+            composable(
+                "dataDetail/{dateTime}",
+                arguments = listOf(navArgument("dateTime") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val dateTime = backStackEntry.arguments?.getString("dateTime")
+                val selectedDay = dataViewModel.getSpecificDay(dateTime)
+                DataDetailScreen(day = selectedDay)
             }
             composable("input") {
                 InputScreen(onSaved = { dataViewModel.fetchDataFromFirebase() })
