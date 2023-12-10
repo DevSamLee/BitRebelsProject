@@ -103,6 +103,8 @@ fun TabsNavGraph(
         }
     )  { innerPadding ->
         var selectedDay by remember { mutableStateOf<Day?>(null) }
+        // Create a state to track data saved status
+        var isDataSaved by remember { mutableStateOf(false) }
 
         NavHost(
             navController = navController,
@@ -122,7 +124,19 @@ fun TabsNavGraph(
                 DataDetailScreen(day = selectedDay)
             }
             composable("input") {
-                InputScreen(onSaved = { dataViewModel.fetchDataFromFirebase() })
+                InputScreen(
+                    onSaved = {
+                        dataViewModel.fetchDataFromFirebase()
+                    },
+                    onSavedCallback = {
+                        // Handle the data saved event, e.g., set a flag
+                        isDataSaved = true
+                        // Check if data is saved, and navigate accordingly
+                        if (isDataSaved) {
+                            navController.navigate("data")
+                        }
+                    }
+                )
             }
             composable("profile") {
                 ProfileScreen(
