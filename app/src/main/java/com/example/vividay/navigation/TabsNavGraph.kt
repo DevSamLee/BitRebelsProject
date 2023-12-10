@@ -102,7 +102,6 @@ fun TabsNavGraph(
             }
         }
     )  { innerPadding ->
-        var selectedDay by remember { mutableStateOf<Day?>(null) }
         // Create a state to track data saved status
         var isDataSaved by remember { mutableStateOf(false) }
 
@@ -121,7 +120,7 @@ fun TabsNavGraph(
             ) { backStackEntry ->
                 val dateTime = backStackEntry.arguments?.getString("dateTime")
                 val selectedDay = dataViewModel.getSpecificDay(dateTime)
-                DataDetailScreen(day = selectedDay)
+                DataDetailScreen(navController, day = selectedDay)
             }
             composable("input") {
                 InputScreen(
