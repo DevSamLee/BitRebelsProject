@@ -81,7 +81,7 @@ fun DataScreen(
                 verticalItemSpacing = 16.dp
             ) {
                 items(result.data ?: emptyList()) { day ->
-                    DataBox(day = day, navController = navHostController) {
+                    DataBox(day = day, navHostController = navHostController) {
                         selectedDay = day // Set the selectedDay when the box is clicked
                     }
                 }
@@ -101,7 +101,7 @@ fun DataScreen(
                         // Retrieve the detailed data based on dateTime and pass it to DataDetailScreen
                         val detailedDay = result.data?.find { it.dateTime == dateTime }
                         if (detailedDay != null) {
-                            DataDetailScreen(day = detailedDay)
+                            DataDetailScreen(navHostController, day = detailedDay)
                         } else {
                             // Handle the case when detailed data is not found for the given dateTime
                             // You can navigate to an error screen or show a toast message
@@ -157,7 +157,7 @@ fun DataScreen(
 }
 
 @Composable
-fun DataBox(day: Day, navController: NavController, onBoxClicked: () -> Unit) {
+fun DataBox(day: Day, navHostController: NavHostController, onBoxClicked: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -168,7 +168,7 @@ fun DataBox(day: Day, navController: NavController, onBoxClicked: () -> Unit) {
                 onBoxClicked()
                 println("Selected Day: ${day.dateTime}")
                 // Navigate to a detailed view or another screen
-                navController.navigate(Screen.DataDetail.route + "/${day.dateTime}")
+                navHostController.navigate(Screen.DataDetail.route + "/${day.dateTime}")
             }
     ) {
         Text(

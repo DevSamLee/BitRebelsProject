@@ -8,10 +8,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vividay.models.Day
+import androidx.navigation.NavHostController
 
 // I want to display this page when the DataBox is clicked from DataScreen
 @Composable
-fun DataDetailScreen(day: Day) {
+fun DataDetailScreen(navController: NavHostController, day: Day) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,11 +29,31 @@ fun DataDetailScreen(day: Day) {
             .padding(20.dp),
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold,
-            text = "Color: ${day.dayColor}")
+            text = "Mood: ${getColorText(day.dayColor)}")
         Text(modifier = Modifier
             .padding(20.dp),
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold,
             text = "Note: ${day.dayNote}")
+        Button(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            Text(text = "Back to Home")
+        }
+    }
+}
+
+// Function to map hex code to color text
+fun getColorText(hexCode: String?): String {
+    return when (hexCode) {
+        "#42eff5" -> "Great"
+        "#2267f2" -> "Good"
+        "#12c45c" -> "SoSo"
+        "#f59e42" -> "Bad"
+        "#f54e42" -> "Terrible"
+        else -> "Unknown"
     }
 }
