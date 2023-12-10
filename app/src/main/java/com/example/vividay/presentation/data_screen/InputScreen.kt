@@ -58,6 +58,7 @@ import androidx.compose.ui.res.vectorResource
 @Composable
 fun InputScreen(
     onSaved: () -> Unit,
+    onSavedCallback: () -> Unit,
     initialDateTime: String = "",
     initialDayColor: String = "",
     initialDayNote: String = ""
@@ -73,7 +74,7 @@ fun InputScreen(
         mutableStateOf(initialDayNote)
     }
 
-    var selectedDayColor by rememberSaveable {
+    var selectedDayColor by remember {
         mutableStateOf<DropDownItem?>(null)
     }
 
@@ -83,14 +84,6 @@ fun InputScreen(
         DropDownItem("SoSo","#12c45c"),
         DropDownItem("Bad","#f59e42"),
         DropDownItem("Terrible", "#f54e42")
-    )
-
-    val faceIcons = listOf(
-        GreatFaceIcon(),
-        GoodFaceIcon(),
-        SoSoFaceIcon(),
-        BadFaceIcon(),
-        TerribleFaceIcon()
     )
 
     val greatIcon = painterResource(id = R.drawable.smiling)
@@ -184,6 +177,12 @@ fun InputScreen(
                     dateTime = ""
                     dayColor = ""
                     dayNote = ""
+
+                    // Call the existing onSaved function
+                    onSaved()
+
+                    // Notify the listener that data is saved
+                    onSavedCallback()
                 },
                 modifier = Modifier.padding(9.dp)
             ) {
@@ -192,53 +191,3 @@ fun InputScreen(
         }
     }
 }
-
-@Composable
-fun GreatFaceIcon(modifier: Modifier = Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.smiling),
-        contentDescription = "Great Day",
-        modifier = modifier.size(50.dp),
-        colorFilter = ColorFilter.tint(Color.White)
-    )
-}
-
-@Composable
-fun GoodFaceIcon(modifier: Modifier = Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.happy),
-        contentDescription = "Good Day",
-        modifier = modifier.size(50.dp),
-        colorFilter = ColorFilter.tint(Color.White)
-    )
-}
-@Composable
-fun SoSoFaceIcon(modifier: Modifier = Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.neutral),
-        contentDescription = "SoSo Day",
-        modifier = modifier.size(50.dp),
-        colorFilter = ColorFilter.tint(Color.White)
-    )
-}
-@Composable
-fun BadFaceIcon(modifier: Modifier = Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.sad),
-        contentDescription = "Bad Day",
-        modifier = modifier.size(50.dp),
-        colorFilter = ColorFilter.tint(Color.White)
-    )
-}
-@Composable
-fun TerribleFaceIcon(modifier: Modifier = Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.crying),
-        contentDescription = "Terrible Day",
-        modifier = modifier.size(50.dp),
-        colorFilter = ColorFilter.tint(Color.White)
-    )
-}
-
-
-
