@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -59,7 +60,7 @@ fun TabsNavGraph(
                 modifier
                     .padding(10.dp)
                     .clip(RoundedCornerShape(20.dp)),
-                containerColor = Color(0xFFCCE6CC)
+                containerColor = Color(0xFF644FDB)
             ) {
                 val backStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = backStackEntry?.destination
@@ -68,7 +69,17 @@ fun TabsNavGraph(
                         selected = currentDestination?.hierarchy?.any {
                             it.route == screen.route
                         } == true,
-                        label = { Text(stringResource(screen.resource)) },
+                        label = {
+                            Text(
+                                text = stringResource(screen.resource),
+                                color = if (currentDestination?.hierarchy?.any {
+                                        it.route == screen.route
+                                    } == true) Color.White else Color.Gray, // Set the font color
+                                fontSize = if (currentDestination?.hierarchy?.any {
+                                        it.route == screen.route
+                                    } == true) 17.sp else 16.sp // Increase font size if selected
+                            )
+                        },
                         icon = {
                             Icon(
                                 imageVector = when (screen.route) {
