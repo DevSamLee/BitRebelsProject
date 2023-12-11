@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.sp
 import com.example.vividay.models.Day
 import androidx.navigation.NavHostController
 
-// I want to display this page when the DataBox is clicked from DataScreen
 @Composable
 fun DataDetailScreen(navController: NavHostController, day: Day) {
     Column(
